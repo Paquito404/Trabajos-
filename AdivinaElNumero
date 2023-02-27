@@ -1,0 +1,40 @@
+from random import randint
+from tkinter import Tk, Entry, Label, Button, messagebox
+
+root = Tk()
+root.title('Adivina el numero')
+root.geometry("500x300")
+root['bg'] = 'yellow'
+
+
+def Adivina():
+    global intento
+    Num3 = int(Num2.get())
+    if Num1 == Num3:
+        messagebox.showinfo("Resultado", "ADIVINASTE")
+        root.destroy()
+    elif intento <= 1:
+        messagebox.showinfo("Resultado", "Ya no te quedan intentos")
+        root.destroy()
+    elif Num1 > Num3:
+        intento = intento - 1
+        label['text'] = f"Muy bajo, Intento: {intento}"
+    else:
+        intento = intento - 1
+        label['text'] = f"Muy alto, Intento: {intento}"
+
+
+intento = 6
+Num1: int = randint(1, 20)
+
+lb_num2 = Label(root, text="Ingresa un numero", bg="yellow", font=("Times New Roman", 20))
+lb_num2.pack(pady=20)
+Num2 = Entry(root, font=("Times New Roman", 18))
+Num2.pack(pady=10)
+
+label = Label(root, text=f"Intento: {intento}", bg="yellow", font=("Times New Roman", 20))
+label.pack(pady=20)
+btn_calcular = Button(root, text="Listo", font=("Arial", 18), command=Adivina)
+btn_calcular.pack(pady=20)
+
+root.mainloop() 
