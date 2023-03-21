@@ -1,0 +1,24 @@
+from tkinter import *
+
+
+class aplicacion(Tk):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.geometry("640x640+500+150")
+        self.title("prueba")
+        self.aplicacion = Canvas(self)
+        self.aplicacion.pack(fill="both", expand=1)
+        self.cuadrado()
+
+    def cuadrado(self):
+        for i in range(16):
+            for j in range(16):
+                if (i+j) % 2 == 0:
+                    self.aplicacion.create_rectangle(i*40, j*40, (i+1)*40, (j+1)*40, fill="white")
+                else:
+                    self.aplicacion.create_rectangle(i*40, j*40, (i+1)*40, (j+1)*40, fill="brown")
+
+
+if __name__ == "__main__":
+    app = aplicacion()
+    app.mainloop()
