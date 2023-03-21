@@ -1,24 +1,37 @@
+import tkinter as tk
 from tkinter import *
 
 
-class aplicacion(Tk):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.geometry("640x640+500+150")
-        self.title("prueba")
-        self.aplicacion = Canvas(self)
-        self.aplicacion.pack(fill="both", expand=1)
-        self.cuadrado()
+class Prueba:
 
-    def cuadrado(self):
-        for i in range(16):
-            for j in range(16):
-                if (i+j) % 2 == 0:
-                    self.aplicacion.create_rectangle(i*40, j*40, (i+1)*40, (j+1)*40, fill="white")
-                else:
-                    self.aplicacion.create_rectangle(i*40, j*40, (i+1)*40, (j+1)*40, fill="brown")
+    def __init__(self):
+        puntos = 0
+        self.ventana = tk.Tk()
+        self.ventana.geometry("1000x405")
+        self.ventana.configure(bg="gray")
+        self.canvas = tk.Canvas(self.ventana, width=600, height=400, background="black")
+        self.canvas.grid(column=0, row=0)
+        self.lb1 = Label(self.ventana, text="Puntaje", bg="gray", font=("Times New Roman", 30, "bold"))
+        self.lb2 = Label(self.ventana, text=puntos, bg="gray", font=("Times New Roman", 30, "bold"))
+        self.lb1.place(x=760, y=100)
+        self.lb2.place(x=815, y=150)
+        self.cuadrado = self.canvas.create_rectangle(50, 10, 70, 30, fill="red")
+        self.ventana.bind("<KeyPress>", self.presion)
+        self.ventana.mainloop()
+
+    def presion(self, evento):
+        if evento.keysym == "Right":
+            self.canvas.move(self.cuadrado, 4, 0)
+        if evento.keysym == "Left":
+            self.canvas.move(self.cuadrado, -4, 0)
+        if evento.keysym == "Down":
+            self.canvas.move(self.cuadrado, 0, 4)
+        if evento.keysym == "Up":
+            self.canvas.move(self.cuadrado, 0, -4)
+
+    def puntos(self):
+        self.lb = Label(self.ventana, text="black", font="Times New Roman", fg="black")
+        self.lb.grid(row=0, columnspan=2, padx=5, pady=20, sticky="w")
 
 
-if __name__ == "__main__":
-    app = aplicacion()
-    app.mainloop()
+Prueba = Prueba()
