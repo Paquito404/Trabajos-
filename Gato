@@ -1,0 +1,116 @@
+from tkinter import *
+from tkinter import messagebox
+from tkinter import simpledialog
+
+
+def bloquear():
+    for i in range(0, 9):
+        ListaBotones[i].config(state="disable")
+
+
+def cambiar(num):
+    global turno, nombreJugador1, nombreJugador2
+    if t[num] == "N" and turno == 0:
+        ListaBotones[num].config(text="X")
+        ListaBotones[num].config(bg="white")
+        t[num] = "X"
+        turno = 1
+        turnoJugador.set("Turno: " + nombreJugador1)
+    if t[num] == "N" and turno == 1:
+        ListaBotones[num].config(text="0")
+        ListaBotones[num].config(bg="lightblue")
+        t[num] = "0"
+        turno = 0
+        turnoJugador.set("Turno: " + nombreJugador1)
+    ListaBotones[num].config(state="disable")
+    verificar()
+
+
+def verificar():
+    if (t[0] == "X" and t[1] == "X" and t[2] == "X") or (t[3] == "X" and t[4] == "X" and t[5] == "X") \
+            or (t[6] == "X" and t[7] == "X" and t[8] == "X"):
+        bloquear()
+        messagebox.showinfo("Ganador", "Ganaste jugador " + nombreJugador1)
+        ventana.destroy()
+    elif (t[0] == "X" and t[4] == "X" and t[8] == "X") or (t[2] == "X" and t[4] == "X" and t[6] == "X"):
+        bloquear()
+        messagebox.showinfo("Ganador", "Ganaste jugador " + nombreJugador1)
+        ventana.destroy()
+    elif (t[0] == "X" and t[3] == "X" and t[6] == "X") or (t[1] == "X" and t[4] == "X" and t[7] == "X") \
+            or (t[2] == "X" and t[5] == "X" and t[8] == "X"):
+        bloquear()
+        messagebox.showinfo("Ganador", "Ganaste jugador " + nombreJugador1)
+        ventana.destroy()
+    if (t[0] == "0" and t[1] == "0" and t[2] == "0") or (t[3] == "0" and t[4] == "0" and t[5] == "0") \
+            or (t[6] == "0" and t[7] == "0" and t[8] == "0"):
+        bloquear()
+        messagebox.showinfo("Ganador", "Ganaste jugador " + nombreJugador2)
+        ventana.destroy()
+    if (t[0] == "0" and t[4] == "0" and t[8] == "0") or (t[2] == "0" and t[4] == "0" and t[6] == "0"):
+        bloquear()
+        messagebox.showinfo("Ganador", "Ganaste jugador " + nombreJugador2)
+        ventana.destroy()
+    if (t[0] == "0" and t[3] == "0" and t[6] == "0") or (t[1] == "0" and t[4] == "0" and t[7] == "0") \
+            or (t[2] == "0" and t[5] == "0" and t[8] == "0"):
+        bloquear()
+        messagebox.showinfo("Ganador", "Ganaste jugador " + nombreJugador2)
+        ventana.destroy()
+
+
+def iniciar():
+    for i in range(0, 9):
+        ListaBotones[i].config(state="normal")
+        ListaBotones[i].config(bg="lightgray")
+        ListaBotones[i].config(text="")
+        t[i] = "N"
+    global nombreJugador1, nombreJugador2
+    nombreJugador1 = simpledialog.askstring("Jugador", "Escribe el nombre del jugador 1:")
+    nombreJugador2 = simpledialog.askstring("Jugador", "Escribe el nombre del jugador 2:")
+    turnoJugador.set("Turno: " + nombreJugador1)
+
+
+ventana = Tk()
+ventana.geometry("500x500")
+ventana.title("gato")
+turno = 0
+nombreJugador1 = ""
+nombreJugador2 = ""
+ListaBotones = []
+t = []
+turnoJugador = StringVar()
+
+for i in range(0, 9):
+    t.append("N")
+
+boton1 = Button(ventana, width=9, height=3, command=lambda: cambiar(0))
+ListaBotones.append(boton1)
+boton1.place(x=50, y=50)
+boton2 = Button(ventana, width=9, height=3, command=lambda: cambiar(1))
+ListaBotones.append(boton2)
+boton2.place(x=150, y=50)
+boton3 = Button(ventana, width=9, height=3, command=lambda: cambiar(2))
+ListaBotones.append(boton3)
+boton3.place(x=250, y=50)
+boton4 = Button(ventana, width=9, height=3, command=lambda: cambiar(3))
+ListaBotones.append(boton4)
+boton4.place(x=50, y=150)
+boton5 = Button(ventana, width=9, height=3, command=lambda: cambiar(4))
+ListaBotones.append(boton5)
+boton5.place(x=150, y=150)
+boton6 = Button(ventana, width=9, height=3, command=lambda: cambiar(5))
+ListaBotones.append(boton6)
+boton6.place(x=250, y=150)
+boton7 = Button(ventana, width=9, height=3, command=lambda: cambiar(6))
+ListaBotones.append(boton7)
+boton7.place(x=50, y=250)
+boton8 = Button(ventana, width=9, height=3, command=lambda: cambiar(7))
+ListaBotones.append(boton8)
+boton8.place(x=150, y=250)
+boton9 = Button(ventana, width=9, height=3, command=lambda: cambiar(8))
+ListaBotones.append(boton9)
+boton9.place(x=250, y=250)
+turnoE = Label(ventana, textvariable=turnoJugador).place(x=120, y=20)
+iniciar = Button(ventana, bg="blue", command=iniciar, fg="white", text="iniciar el juego", width=15, height=3).place(
+    x=120, y=350)
+bloquear()
+ventana.mainloop()
